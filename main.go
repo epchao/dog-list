@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 )
 
 // Defining our "Dog" data schema
@@ -38,11 +39,11 @@ func main() {
 
   // take form submission and the post values and render to list
   addDog := func (write http.ResponseWriter, request *http.Request) {
+    time.Sleep(1 * time.Second)
     name := request.PostFormValue("name")
     breed := request.PostFormValue("breed")
-    htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", name, breed)
-    tmpl, _ := template.New("t").Parse(htmlStr)
-    tmpl.Execute(write, nil)
+    tmpl := template.Must(template.ParseFiles("index.html"))
+    tmpl.ExecuteTemplate(write, "dog-list-element", Dog{Name: name, Breed: breed})
   }
 
   // greet() will be run when a user loads the root URL

@@ -17,7 +17,9 @@
         <!-- Use jinja template to generate "dynamic" text format -->
         <ul class="list-group fs-5 me-5" id="dog-list">
           {{ range .Dogs }}
+            {{ block "dog-list-element" .}}
             <li class="list-group-item bg-primary text-white">{{ .Name }} - {{ .Breed }}</li>
+            {{ end }}
           {{ end }}
         </ul>
       </div>
@@ -25,7 +27,7 @@
       <div class="col-4">
         <h1 class="mb-4">Add a furry pet</h1>
         
-        <form hx-post="/add-dog/" hx-target="#dog-list" hx-swap="beforeend">
+        <form hx-post="/add-dog/" hx-target="#dog-list" hx-swap="beforeend" hx-indicator="#spinner">
           <div class="mb-2">
             <label for="dog-name">Name</label>
             <input type="text" name="name" id="dog-name" class="form-control">
@@ -36,7 +38,10 @@
             <input type="text" name="breed" id="dog-breed" class="form-control">
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">
+            Submit
+            <span class="spinner-border spinner-border-sm htmx-indicator" id="spinner"></span>
+          </button>
         </form>
       </div>
     </div>
