@@ -28,12 +28,12 @@
         <h1 class="mb-4">Add a furry pet</h1>
         
         <form hx-post="/add-dog/" hx-target="#dog-list" hx-swap="beforeend" hx-indicator="#spinner">
-          <div class="mb-2">
+          <div class="mb-2 form-group">
             <label for="dog-name">Name</label>
             <input type="text" name="name" id="dog-name" class="form-control">
           </div>
 
-          <div class="mb-3">
+          <div class="mb-3 form-group">
             <label for="dog-breed">Breed</label>
             <input type="text" name="breed" id="dog-breed" class="form-control">
           </div>

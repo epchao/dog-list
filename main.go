@@ -19,6 +19,7 @@ type Dog struct {
 func main() {
   fmt.Println("Hosting a server on localhost:8080")
 
+  // instantiate dogs object map with default dogs
   dogs := map[string][]Dog {
    "Dogs": {
       { Name: "Bear", Breed: "Maltese" },
@@ -41,13 +42,23 @@ func main() {
   // take form submission and the post values and render to list
   addDog := func (write http.ResponseWriter, request *http.Request) {
     time.Sleep(1 * time.Second)
+    
     name := request.PostFormValue("name")
     breed := request.PostFormValue("breed")
-    dog := Dog{Name: name, Breed: breed}
 
-    tmpl := template.Must(template.ParseFiles("index.html"))
-    tmpl.ExecuteTemplate(write, "dog-list-element", dog)
-    dogs["Dogs"] = append(dogs["Dogs"], dog)
+    if (name == "" && breed == "") {
+      fmt.Println("Missing dog name and breed!")
+    } else if (name == "") {
+      fmt.Println("Missing dog name!")
+    } else if (breed == "") {
+      fmt.Println("Missing dog breed!")
+    } else {
+      dog := Dog{Name: name, Breed: breed}
+
+      tmpl := template.Must(template.ParseFiles("index.html"))
+      tmpl.ExecuteTemplate(write, "dog-list-element", dog)
+      dogs["Dogs"] = append(dogs["Dogs"], dog)
+    }
   }
 
   // greet() will be run when a user loads the root URL
