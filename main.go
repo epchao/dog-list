@@ -36,8 +36,17 @@ func main() {
     tmpl.Execute(write, dogs)
   }
 
+  addDog := func (write http.ResponseWriter, request *http.Request) {
+    name := request.PostFormValue("name")
+    breed := request.PostFormValue("breed")
+    htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", name, breed)
+    tmpl, _ := template.New("t").Parse(htmlStr)
+    tmpl.Execute(write, nil)
+  }
+
   // greet() will be run when a user loads the root URL
   http.HandleFunc("/", greet)
+  http.HandleFunc("/add-dog/", addDog)
 
   // fail-safe default and provide the server
   log.Fatal(http.ListenAndServe(":8080", nil))
