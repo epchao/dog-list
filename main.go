@@ -36,6 +36,7 @@ func main() {
     tmpl.Execute(write, dogs)
   }
 
+  // take form submission and the post values and render to list
   addDog := func (write http.ResponseWriter, request *http.Request) {
     name := request.PostFormValue("name")
     breed := request.PostFormValue("breed")
@@ -46,6 +47,7 @@ func main() {
 
   // greet() will be run when a user loads the root URL
   http.HandleFunc("/", greet)
+  // addDog() adds a dog to the list
   http.HandleFunc("/add-dog/", addDog)
 
   // fail-safe default and provide the server
