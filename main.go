@@ -47,7 +47,7 @@ func main() {
 
   // greet() will be run when a user loads the root URL
   http.HandleFunc("/", greet)
-  // addDog() adds a dog to the list
+  // addDog() lives on add-dog and awaits form submission from user
   http.HandleFunc("/add-dog/", addDog)
 
   // fail-safe default and provide the server
